@@ -1,75 +1,84 @@
-# ChessWeb - Huong dan chay nhanh bang Docker Compose
+# ChessMaster - Online Chess Website
 
-Muc tieu: chi can chay `docker compose` de dung web, khong can cai/running MySQL thu cong.
+## Các tính năng chính
 
-## 1. Clone source
+* Chơi ở 2 chế độ:
+
+  * Khách (không cần đăng nhập)
+  * Người chơi (cần đăng nhập)
+* Thi đấu với máy thông qua tích hợp AI.
+* Thi đấu PvP thời gian thực giữa:
+
+  * Guest/User
+  * User/User
+* Xem lịch sử các trận đấu của bản thân.
+* Theo dõi tỉ lệ thắng/thua.
+* Trang quản trị Admin để:
+
+  * Kiểm soát tài khoản
+  * Thống kê người dùng
+  * Quản lý trận đấu
+
+---
+
+##  Hướng dẫn cài đặt nhanh (Quick Start)
+
+Dự án đã được container hóa hoàn toàn. Bạn không cần cài đặt Java hay MySQL thủ công trên máy.
+
+### 1. Yêu cầu hệ thống
+
+* Đã cài đặt Docker và Docker Compose.
+* Máy tính có tối thiểu 4GB RAM trống.
+
+### 2. Triển khai
+
+Mở Terminal và thực hiện các lệnh sau:
 
 ```bash
-git clone <LINK_REPO_GITHUB>
-cd <TEN_THU_MUC_PROJECT>
-```
+# Clone source code
+git clone https://github.com/trungduc81/ChessWeb.git
+cd ChessWeb
 
-Vi du:
-
-```bash
-git clone https://github.com/<username>/<repo>.git
-cd ChessMaster_CMT
-```
-
-## 2. Chay project bang Docker Compose
-
-Tai thu muc goc project (noi co file `docker-compose.yml`), chay:
-
-```bash
+# Khởi chạy toàn bộ hệ thống (App + Database)
 docker compose up -d --build
 ```
 
-Lenh nay se:
-- Build image cho ung dung Spring Boot
-- Khoi tao MySQL container
-- Tu dong chay script `database_setup.sql`
-- Chay web app tren cong `8080`
+Hệ thống sẽ tự động build mã nguồn Java, thiết lập Database và chạy tệp `database_setup.sql` để khởi tạo dữ liệu ban đầu.
 
-## 3. Truy cap web
+## 🔗 Đường dẫn truy cập
 
-- Trang chinh: `http://localhost:8080/`
-- Dang nhap: `http://localhost:8080/Login.html`
-- Dang ky: `http://localhost:8080/Register.html`
-- Dashboard: `http://localhost:8080/Dashboard.html`
+Sau khi hệ thống khởi chạy thành công, bạn có thể truy cập qua các đường dẫn sau:
 
-## 4. Cac lenh Docker Compose thuong dung
+* Trang chủ: `http://localhost:8080/`
+* Đăng nhập: `http://localhost:8080/Login.html`
+* Đăng ký: `http://localhost:8080/Register.html`
+* Quản trị viên: `http://localhost:8080/Dashboard.html`
 
-Xem trang thai container:
+##  Tài khoản mặc định
 
-```bash
-docker compose ps
-```
+| Vai trò | Username | Password |
+| ------- | -------- | -------- |
+| Admin   | admin    | admin123 |
+| User    | player1  | 123  |
 
-Xem log:
+##  Cấu trúc chức năng chính
 
-```bash
-docker compose logs -f
-```
+* Guest Mode
 
-Dung he thong:
+  * Chơi nhanh không cần đăng nhập
+  * Tham gia PvP với người dùng khác
 
-```bash
-docker compose down
-```
+* User Mode
 
-Dung va xoa ca volume database (reset du lieu):
+  * Đăng ký / đăng nhập tài khoản
+  * Theo dõi lịch sử trận đấu
+  * Xem thống kê cá nhân
+  * Tạo phòng hơi với AI hoặc PvP
 
-```bash
-docker compose down -v
-```
+* Admin Mode
 
-## 5. Neu sua code va muon chay lai
+  * Quản lý tài khoản người dùng
+  * Theo dõi thống kê hệ thống
+  * Kiểm soát trạng thái tài khoản
 
-```bash
-docker compose up -d --build
-```
 
-## Ghi chu
-
-- Neu may chua bat Docker Desktop, hay bat Docker truoc khi chay lenh.
-- Toan bo DB da duoc dong goi trong `docker-compose.yml`, khong can cai MySQL rieng.
